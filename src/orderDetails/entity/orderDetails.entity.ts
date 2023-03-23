@@ -1,4 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { OrderItems } from '@src/orderItems/entity/orderItems.entity';
+import {
+	Column,
+	Entity,
+	OneToMany,
+	OneToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm';
 //importar orderitems e paymentdetails quando pronto
 @Entity()
 export class OrderDetails {
@@ -11,9 +18,6 @@ export class OrderDetails {
 	@Column()
 	userId: number;
 
-	@Column()
-	payment: PaymentDetailsBase;
-
 	@Column({ default: new Date() })
 	date: Date;
 
@@ -24,5 +28,15 @@ export class OrderDetails {
 		onDelete: 'CASCADE',
 		cascade: ['remove'],
 	})
-	items: Array<OrderItems>;
+	orderItems: Array<OrderItems>;
+
+	@OneToOne(
+		() => PaymentDetails,
+		paymentDetails => paymentDetails.orderDetails,
+		{
+			cascade: ['insert'],
+			onDelete: 'CASCADE',
+		}
+	)
+	paymentDetails: PaymentDetails;
 }
