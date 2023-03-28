@@ -1,5 +1,6 @@
 import { OrderDetails } from '@src/orderDetails/entity/orderDetails.entity';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { paymentStatus } from '@src/common/enums/statusPayment.enum';
 
 @Entity()
 export class PaymentDetails {
@@ -12,8 +13,8 @@ export class PaymentDetails {
 	@Column()
 	date: Date;
 
-	@Column()
-	status: StatusPayment;
+	@Column({ default: [paymentStatus.WAITING], array: true, type: 'int' })
+	status: Array<number>;
 
 	@OneToOne(() => OrderDetails, orderDetails => orderDetails.paymentDetails, {
 		cascade: ['insert'],
