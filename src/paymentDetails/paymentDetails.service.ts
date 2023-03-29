@@ -36,3 +36,4 @@ export class PaymentDetailsService implements Service {
 
     return payment;
 }
+}
