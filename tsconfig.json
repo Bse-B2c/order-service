@@ -19,9 +19,9 @@
 			"@src/*": ["./*"],
 			"@middleware/*": ["./middleware/*"],
 			"@common/*": ["./common/*"],
-			"@orderDetails/*": ["./orderDetails"],
-			"@orderItems/*": ["./orderItems"],
-			"@paymentDetails/*": ["./paymentDetails"],
+			"@orderDetails/*": ["./orderDetails/*"],
+			"@orderItems/*": ["./orderItems/*"],
+			"@paymentDetails/*": ["./paymentDetails/*"],
 		}
 	},
 	"include": ["./**/*.ts"]
