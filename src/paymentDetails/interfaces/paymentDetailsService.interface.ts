@@ -7,4 +7,5 @@ import { PaymentDetailsDto } from '@paymentDetails/dtos/paymentDetails.dto';
 export interface PaymentDetailsService {
 	create(paymentDetails: PaymentDetailsDto): Promise<PaymentDetails>;
 	findOne(id: number): Promise<PaymentDetails>;
+	delete(id: number): Promise<PaymentDetails>;
 }
