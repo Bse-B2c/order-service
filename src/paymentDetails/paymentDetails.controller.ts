@@ -43,4 +43,20 @@ export class PaymentDetailsController {
 			next(e);
 		}
 	};
+
+	delete = async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { id } = req.params;
+
+			const response = await this.service.delete(+id);
+
+			return res.status(HttpStatusCode.OK).send({
+				statusCode: HttpStatusCode.OK,
+				error: null,
+				data: response,
+			});
+		} catch (e) {
+			next(e);
+		}
+	};
 }
