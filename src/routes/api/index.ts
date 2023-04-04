@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import orderDetails from '@src/routes/api/orderDetails';
-
+import order from '@src/routes/api/order';
+import cart from '@src/routes/api/cart';
 const router = Router();
 
-router.use('/api/orderdetails', orderDetails);
+router.use('/order', order);
+router.use('/cart', cart);
 
 export default router;
