@@ -10,10 +10,6 @@ export class PaymentDetailsDto {
 	provider: string;
 
 	@IsNotEmpty()
-	@IsISO8601()
-	date: Date;
-
-	@IsNotEmpty()
 	@IsNumber()
 	type: Array<number>;
 }
