@@ -6,7 +6,8 @@ import {
 	OneToOne,
 	PrimaryGeneratedColumn,
 } from 'typeorm';
-//importar orderitems e paymentdetails quando pronto
+import { PaymentDetails } from '@paymentDetails/entity/paymentDetails.entity';
+
 @Entity()
 export class OrderDetails {
 	@PrimaryGeneratedColumn()
