@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 import { OrderDetails } from '@src/orderDetails/entity/orderDetails.entity';
 import { PaymentDetails } from '@src/paymentDetails/entity/paymentDetails.entity';
+import { OrderItems } from './orderItems/entity/orderItems.entity';
 
 dotenv.config();
 
