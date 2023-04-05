@@ -1,4 +1,4 @@
-import { IsISO8601, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UpdatePaymentDetailsDto {
 	@IsNotEmpty()
