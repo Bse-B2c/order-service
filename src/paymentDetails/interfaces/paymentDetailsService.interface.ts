@@ -1,9 +1,6 @@
-import { paymentStatus } from '@src/common/enums/paymentStatus.enum';
 import { PaymentDetails } from '@paymentDetails/entity/paymentDetails.entity';
-import { FindOptionsSelect } from 'typeorm';
 import { PaymentDetailsDto } from '@paymentDetails/dtos/paymentDetails.dto';
-import { SearchDto } from '../dtos/search.dto';
-//import{}
+import { SearchDto } from '@paymentDetails/dtos/search.dto';
 
 export interface PaymentDetailsService {
 	create(paymentDetails: PaymentDetailsDto): Promise<PaymentDetails>;
