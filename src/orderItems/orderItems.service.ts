@@ -11,8 +11,8 @@ import {
 import { OrderItems } from '@orderItems/entity/orderItems.entity';
 import { OrderItemsDto } from '@orderItems/dtos/orderItems.dto';
 import { HttpException, HttpStatusCode } from '@bse-b2c/common';
-import { UpdateOrderItemsDto } from './dtos/updateOrderItems.dto';
-import { SearchDto } from './dtos/search.dto';
+import { UpdateOrderItemsDto } from '@orderItems/dtos/updateOrderItems.dto';
+import { SearchDto } from '@orderItems/dtos/search.dto';
 
 export class OrderItemsService implements Service {
 	constructor(private repository: Repository<OrderItems>) {}
