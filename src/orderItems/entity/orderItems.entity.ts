@@ -17,4 +17,10 @@ export class OrderItems {
 		onDelete: 'CASCADE',
 	})
 	orderDetails: OrderDetails;
+
+	@Column()
+	productId: number;
+
+	@Column()
+	total: number;
 }
