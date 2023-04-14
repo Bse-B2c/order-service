@@ -12,22 +12,23 @@ export class SearchDto extends BaseSearchFilter {
 	ids: Array<number>;
 
 	@IsOptional()
-	@Transform(({ value }) => {
-		if (value) return formatQueryToArray(value).map((e: string) => +e);
-		return value;
-	})
-	quantity: Array<number>;
+	@IsString()
+	identifier: Array<string>;
+
+	@IsOptional()
+	@IsString()
+	packageTracking: Array<string>;
 
 	@IsOptional()
 	@IsISO8601()
-	purchaseDate: Date;
+	date: Date;
 
 	@IsOptional()
 	@Transform(({ value }) => {
 		if (value) return formatQueryToArray(value).map((e: string) => +e);
 		return value;
 	})
-	productId: Array<number>;
+	userId: Array<number>;
 
 	@IsOptional()
 	@Transform(({ value }) => {
@@ -37,7 +38,7 @@ export class SearchDto extends BaseSearchFilter {
 	total: Array<number>;
 
 	@IsString()
-	@IsIn(['id', 'quantity', 'purchaseDate', 'productId', 'total'])
+	@IsIn(['id', 'identifier', 'packageTracking', 'date', 'userId', 'total'])
 	@IsOptional()
 	orderBy?: string;
 }
