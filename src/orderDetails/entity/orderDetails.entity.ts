@@ -40,4 +40,7 @@ export class OrderDetails {
 		}
 	)
 	paymentDetails: PaymentDetails;
+
+	@Column()
+	packageTracking: string;
 }
