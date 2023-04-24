@@ -14,15 +14,15 @@ export class OrderDetailsController {
 				packageTracking,
 				userId,
 				total,
-				orderItemsId,
-				paymentDetailsId,
+				orderItems,
+				paymentDetails,
 			} = req.body as OrderDetailsDto;
 
 			const response = await this.service.create({
 				identifier,
 				packageTracking,
-				orderItemsId,
-				paymentDetailsId,
+				orderItems,
+				paymentDetails,
 				userId,
 				total,
 			});
@@ -97,8 +97,8 @@ export class OrderDetailsController {
 					packageTracking,
 					userId,
 					total,
-					orderItemsId,
-					paymentDetailsId,
+					orderItems,
+					paymentDetails,
 				},
 				params: { id },
 			} = req;
@@ -107,8 +107,8 @@ export class OrderDetailsController {
 				identifier,
 				packageTracking,
 				userId,
-				orderItemsId,
-				paymentDetailsId,
+				orderItems,
+				paymentDetails,
 				total,
 			});
 

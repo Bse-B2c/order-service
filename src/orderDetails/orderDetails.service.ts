@@ -12,20 +12,42 @@ import { OrderDetailsDto } from '@orderDetails/dtos/orderDetails.dto';
 import { HttpException, HttpStatusCode } from '@bse-b2c/common';
 import { UpdateOrderDetailsDto } from '@orderDetails/dtos/updateOrderDetails.dto';
 import { SearchDto } from '@orderDetails/dtos/search.dto';
+import { OrderItemsService } from '@src/orderItems/interfaces/orderItemsService.interface';
+import { PaymentDetailsService } from '@src/paymentDetails/interfaces/paymentDetailsService.interface';
 
 export class OrderDetailsService implements Service {
-	constructor(private repository: Repository<OrderDetails>) {}
+	constructor(
+		private repository: Repository<OrderDetails>,
+		private itemsService: OrderItemsService,
+		private detailsService: PaymentDetailsService
+	) {}
 
 	create = async ({
 		identifier,
 		packageTracking,
 		userId,
+		orderItems,
+		paymentDetails,
 		total,
 	}: OrderDetailsDto): Promise<OrderDetails> => {
-		const newItems = await this.repository.create({
+		const order = await this.repository.findOne({ where: { identifier } });
+		let items = null;
+		let details = null;
+
+		if (order)
+			throw new HttpException({
+				statusCode: HttpStatusCode.CONFLICT,
+				message: 'The order has already been created',
+			});
+		if (orderItems) items = await this.itemsService.create(orderItems);
+		if (paymentDetails)
+			details = await this.detailsService.create(paymentDetails);
+		const newItems = this.repository.create({
 			identifier,
 			packageTracking,
 			userId,
+			items,
+			details,
 			total,
 		});
 		return this.repository.save(newItems);

@@ -1,4 +1,6 @@
-import { IsISO8601, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { OrderItems } from '@src/orderItems/entity/orderItems.entity';
+import { PaymentDetails } from '@src/paymentDetails/entity/paymentDetails.entity';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class OrderDetailsDto {
 	@IsNumber()
@@ -17,11 +19,9 @@ export class OrderDetailsDto {
 	@IsNotEmpty()
 	packageTracking: string;
 
-	@IsNumber()
 	@IsNotEmpty()
-	orderItemsId: number;
+	orderItems: Array<OrderItems>;
 
-	@IsNumber()
 	@IsNotEmpty()
-	paymentDetailsId: number;
+	paymentDetails: PaymentDetails;
 }
