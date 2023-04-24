@@ -9,13 +9,20 @@ export class OrderDetailsController {
 
 	create = async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			const { identifier, packageTracking, userId, total } =
-				req.body as OrderDetailsDto;
+			const {
+				identifier,
+				packageTracking,
+				userId,
+				total,
+				orderItemsId,
+				paymentDetailsId,
+			} = req.body as OrderDetailsDto;
 
 			const response = await this.service.create({
 				identifier,
 				packageTracking,
-
+				orderItemsId,
+				paymentDetailsId,
 				userId,
 				total,
 			});
@@ -85,7 +92,14 @@ export class OrderDetailsController {
 	update = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const {
-				body: { identifier, packageTracking, userId, total },
+				body: {
+					identifier,
+					packageTracking,
+					userId,
+					total,
+					orderItemsId,
+					paymentDetailsId,
+				},
 				params: { id },
 			} = req;
 
@@ -93,6 +107,8 @@ export class OrderDetailsController {
 				identifier,
 				packageTracking,
 				userId,
+				orderItemsId,
+				paymentDetailsId,
 				total,
 			});
 
