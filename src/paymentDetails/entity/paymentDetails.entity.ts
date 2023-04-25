@@ -14,11 +14,11 @@ export class PaymentDetails {
 	@Column({ default: new Date() })
 	date: Date;
 
-	@Column({ default: [paymentStatus.WAITING], array: true, type: 'int' })
-	status: Array<number>;
+	@Column({ default: paymentStatus.WAITING, type: 'int' })
+	status: number;
 
-	@Column({ default: [paymentType.BOLETO] })
-	type: Array<number>;
+	@Column({ default: paymentType.BOLETO })
+	type: number;
 
 	@OneToOne(() => OrderDetails, orderDetails => orderDetails.paymentDetails, {
 		cascade: ['insert'],

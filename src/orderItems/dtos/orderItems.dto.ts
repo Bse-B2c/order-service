@@ -6,10 +6,6 @@ export class OrderItemsDto {
 	quantity: number;
 
 	@IsNotEmpty()
-	@IsISO8601()
-	purchaseDate: Date;
-
-	@IsNotEmpty()
 	@IsNumber()
 	productId: number;
 

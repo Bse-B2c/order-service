@@ -1,6 +1,6 @@
-import { OrderItems } from '@src/orderItems/entity/orderItems.entity';
-import { PaymentDetails } from '@src/paymentDetails/entity/paymentDetails.entity';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { OrderItemsDto } from '@orderItems/dtos/orderItems.dto';
+import { PaymentDetailsDto } from '@paymentDetails/dtos/paymentDetails.dto';
 
 export class OrderDetailsDto {
 	@IsNumber()
@@ -20,8 +20,8 @@ export class OrderDetailsDto {
 	packageTracking: string;
 
 	@IsNotEmpty()
-	orderItems: Array<OrderItems>;
+	orderItems: Array<OrderItemsDto>;
 
 	@IsNotEmpty()
-	paymentDetails: PaymentDetails;
+	paymentDetails: PaymentDetailsDto;
 }

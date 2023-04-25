@@ -12,8 +12,9 @@ import { OrderDetailsDto } from '@orderDetails/dtos/orderDetails.dto';
 import { HttpException, HttpStatusCode } from '@bse-b2c/common';
 import { UpdateOrderDetailsDto } from '@orderDetails/dtos/updateOrderDetails.dto';
 import { SearchDto } from '@orderDetails/dtos/search.dto';
-import { OrderItemsService } from '@src/orderItems/interfaces/orderItemsService.interface';
-import { PaymentDetailsService } from '@src/paymentDetails/interfaces/paymentDetailsService.interface';
+import { OrderItemsService } from '@orderItems/interfaces/orderItemsService.interface';
+import { PaymentDetailsService } from '@paymentDetails/interfaces/paymentDetailsService.interface';
+import { OrderItemsDto } from '@orderItems/dtos/orderItems.dto';
 
 export class OrderDetailsService implements Service {
 	constructor(
@@ -23,34 +24,36 @@ export class OrderDetailsService implements Service {
 	) {}
 
 	create = async ({
-		identifier,
 		packageTracking,
 		userId,
 		orderItems,
 		paymentDetails,
 		total,
 	}: OrderDetailsDto): Promise<OrderDetails> => {
-		const order = await this.repository.findOne({ where: { identifier } });
-		let items = null;
-		let details = null;
+		let items: Array<OrderItemsDto> = []; //TODO:limpar carrinho on create
+		let details = undefined;
 
-		if (order)
-			throw new HttpException({
-				statusCode: HttpStatusCode.CONFLICT,
-				message: 'The order has already been created',
-			});
-		if (orderItems) items = await this.itemsService.create(orderItems);
+		if (orderItems) {
+			for (let i = 0; i < orderItems.length; i++) {
+				const item = orderItems[i];
+
+				const newItem = await this.itemsService.create(item);
+				items.push(newItem);
+			}
+		}
+
 		if (paymentDetails)
 			details = await this.detailsService.create(paymentDetails);
-		const newItems = this.repository.create({
-			identifier,
+
+		const newDetails = this.repository.create({
+			identifier: '',
 			packageTracking,
 			userId,
-			items,
-			details,
+			orderItems: items,
+			paymentDetails: details,
 			total,
 		});
-		return this.repository.save(newItems);
+		return this.repository.save(newDetails);
 	};
 
 	findOne = async (id: number): Promise<OrderDetails> => {

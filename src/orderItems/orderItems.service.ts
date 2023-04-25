@@ -19,13 +19,13 @@ export class OrderItemsService implements Service {
 
 	create = async ({
 		quantity,
-		purchaseDate,
+
 		productId,
 		total,
 	}: OrderItemsDto): Promise<OrderItems> => {
 		const newItems = await this.repository.create({
 			quantity,
-			purchaseDate,
+
 			productId,
 			total,
 		});

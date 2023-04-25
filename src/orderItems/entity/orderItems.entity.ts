@@ -9,7 +9,7 @@ export class OrderItems {
 	@Column()
 	quantity: number;
 
-	@Column()
+	@Column({ default: new Date() })
 	purchaseDate: Date;
 
 	@ManyToOne(() => OrderDetails, orderDetails => orderDetails.orderItems, {
