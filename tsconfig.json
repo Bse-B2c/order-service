@@ -22,6 +22,8 @@
 			"@orderDetails/*": ["./orderDetails/*"],
 			"@orderItems/*": ["./orderItems/*"],
 			"@paymentDetails/*": ["./paymentDetails/*"],
+			"@cartItem/*": ["./cartItem/*"],
+			"@shoppingCart/*": ["./shoppingCart/*"],
 		}
 	},
 	"include": ["./**/*.ts"]

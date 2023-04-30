@@ -13,4 +13,7 @@ export class CartItem {
 
 	@Column()
 	productId: number;
+
+	@Column()
+	price: number;
 }
