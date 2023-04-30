@@ -1,21 +1,19 @@
-import { IsISO8601, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UpdateOrderDetailsDto {
 	@IsNumber()
-    @IsNotEmpty()
+	@IsNotEmpty()
 	total: number;
 
 	@IsNumber()
-    @IsNotEmpty()
+	@IsNotEmpty()
 	userId: number;
 
-	
 	@IsString()
-    @IsNotEmpty()
+	@IsNotEmpty()
 	identifier: string;
 
-	
 	@IsString()
-    @IsNotEmpty()
+	@IsNotEmpty()
 	packageTracking: string;
 }
