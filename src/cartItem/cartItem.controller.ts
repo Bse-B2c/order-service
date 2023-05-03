@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { HttpStatusCode } from '@bse-b2c/common';
-import { CartItemService } from './interfaces/cartItemService.interface';
-import { CartItemDto } from './dtos/cartItem.dto';
-import { SearchDto } from './dtos/search.dto';
+import { CartItemService } from '@cartItem/interfaces/cartItemService.interface';
+import { CartItemDto } from '@cartItem/dtos/cartItem.dto';
+import { SearchDto } from '@cartItem/dtos/search.dto';
 
 export class CartItemController {
 	constructor(private service: CartItemService) {}
