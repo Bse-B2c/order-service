@@ -1,9 +1,10 @@
 import dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
-import { OrderDetails } from '@src/orderDetails/entity/orderDetails.entity';
-import { PaymentDetails } from '@src/paymentDetails/entity/paymentDetails.entity';
+import { OrderDetails } from '@orderDetails/entity/orderDetails.entity';
+import { PaymentDetails } from '@paymentDetails/entity/paymentDetails.entity';
 import { OrderItems } from '@orderItems/entity/orderItems.entity';
 import { CartItem } from '@cartItem/entity/cartItem.entity';
+import { ShoppingCart } from '@shoppingCart/entity/shoppingCart.entity';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ export const dataSource = new DataSource({
 	username: process.env['TYPEORM_USERNAME'],
 	password: process.env['TYPEORM_PASSWORD'],
 	database: process.env['TYPEORM_DATABASE'],
-	entities: [OrderDetails, PaymentDetails, OrderItems, CartItem],
+	entities: [OrderDetails, PaymentDetails, OrderItems, CartItem, ShoppingCart],
 	synchronize: true,
 });
 
