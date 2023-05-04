@@ -7,9 +7,9 @@ const router = Router();
 import { cartItemController } from '@src/cartItem';
 
 //dto
-import { CartItemDto } from '@src/cartItem/dtos/cartItem.dto';
+import { CartItemDto } from '@cartItem/dtos/cartItem.dto';
 import { ParamsDto } from '@src/common/dtos/params.dto';
-import { SearchDto } from '@src/cartItem/dtos/search.dto';
+import { SearchDto } from '@cartItem/dtos/search.dto';
 
 //validate
 const validateBody = validate('body');
