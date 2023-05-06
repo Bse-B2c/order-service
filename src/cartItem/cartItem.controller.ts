@@ -60,6 +60,28 @@ export class CartItemController {
 		}
 	};
 
+	removeFromCart = async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const {
+				body: { productId },
+				user,
+			} = req;
+
+			const response = await this.service.removeFromCart(
+				user ? user.id : -1,
+				productId
+			);
+
+			return res.status(HttpStatusCode.OK).send({
+				statusCode: HttpStatusCode.OK,
+				error: null,
+				data: response,
+			});
+		} catch (e) {
+			next(e);
+		}
+	};
+
 	delete = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { id } = req.params;

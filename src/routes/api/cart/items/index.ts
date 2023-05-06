@@ -15,6 +15,8 @@ import {
 	verifyRoles,
 } from '@middleware/ensureAuthenticated';
 import { Role } from '@common/enums/role.enum';
+import { AddItemDto } from '@cartItem/dtos/AddItem.dto';
+import { RemoveItemDto } from '@cartItem/dtos/removeItem.dto';
 
 //validate
 const validateBody = validate('body');
@@ -29,7 +31,15 @@ router.patch(
 	'/add',
 	ensureAuthenticated,
 	verifyRoles([Role.CONSUMER, Role.ADMIN]),
+	validateBody(AddItemDto),
 	cartItemController.addToCart
+);
+router.patch(
+	'/remove',
+	ensureAuthenticated,
+	verifyRoles([Role.CONSUMER, Role.ADMIN]),
+	validateBody(RemoveItemDto),
+	cartItemController.removeFromCart
 );
 router.patch(
 	'/:id',

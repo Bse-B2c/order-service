@@ -10,4 +10,5 @@ export interface CartItemService {
 	find(search: SearchDto): Promise<Array<CartItem>>;
 	update(id: number, updatedItems: CartItemDto): Promise<CartItem>;
 	addToCart(userId: number, item: AddItemDto): Promise<CartItem>;
+	removeFromCart(userId: number, productId: number): Promise<CartItem>;
 }

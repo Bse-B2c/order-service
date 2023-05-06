@@ -39,9 +39,9 @@ export class CartItemService implements Service {
 		return this.repository.save(newCart);
 	};
 
-	addToCart = async (
+	removeFromCart = async (
 		userId: number,
-		{ productId, price, discount }: AddItemDto
+		productId: number
 	): Promise<CartItem> => {
 		const shoppingCart = await this.shoppingCartService.findCartByUser(userId);
 		const cartItem = await this.repository.findOne({
@@ -49,13 +49,45 @@ export class CartItemService implements Service {
 			loadRelationIds: true,
 			where: { productId, shoppingCart: Equal(shoppingCart.id) },
 		});
-		const productPrice = discount ? price - (price * discount) / 100 : price;
+
+		if (!cartItem) {
+			throw new HttpException({
+				statusCode: HttpStatusCode.NOT_FOUND,
+				message: `Item not found`,
+			});
+		}
+
+		const newQuantity = cartItem.quantity - 1;
+
+		if (newQuantity <= 0) {
+			await this.delete(cartItem.id);
+		} else {
+			Object.assign(cartItem, { quantity: newQuantity });
+
+			await this.repository.save(cartItem);
+		}
+
+		await this.shoppingCartService.updateTotal(shoppingCart.id);
+
+		return cartItem;
+	};
+
+	addToCart = async (
+		userId: number,
+		{ productId, price }: AddItemDto
+	): Promise<CartItem> => {
+		const shoppingCart = await this.shoppingCartService.findCartByUser(userId);
+		const cartItem = await this.repository.findOne({
+			relations: { shoppingCart: true },
+			loadRelationIds: true,
+			where: { productId, shoppingCart: Equal(shoppingCart.id) },
+		});
 
 		if (!cartItem) {
 			const newCartItem = await this.create({
 				productId,
 				quantity: 1,
-				price: productPrice,
+				price: price,
 				cartId: shoppingCart.id,
 			});
 
@@ -66,7 +98,7 @@ export class CartItemService implements Service {
 
 		Object.assign(cartItem, {
 			quantity: newQuantity,
-			price: productPrice,
+			price: price,
 		});
 
 		await this.repository.save(cartItem);

@@ -39,6 +39,7 @@ export class ShoppingCartService implements Service {
 
 	findCartByUser = async (userId: number): Promise<ShoppingCart> => {
 		const cart = await this.repository.findOne({
+			relations: { cartItems: true },
 			where: { userId },
 		});
 
