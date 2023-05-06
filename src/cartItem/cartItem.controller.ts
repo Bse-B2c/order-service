@@ -9,12 +9,13 @@ export class CartItemController {
 
 	create = async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			const { quantity, productId, price } = req.body as CartItemDto;
+			const { quantity, productId, cartId, price } = req.body as CartItemDto;
 
 			const response = await this.service.create({
 				quantity,
 				productId,
 				price,
+				cartId,
 			});
 
 			return res.status(HttpStatusCode.CREATED).send({
@@ -32,6 +33,22 @@ export class CartItemController {
 			const { id } = req.params;
 
 			const response = await this.service.findOne(+id);
+
+			return res.status(HttpStatusCode.OK).send({
+				statusCode: HttpStatusCode.OK,
+				error: null,
+				data: response,
+			});
+		} catch (e) {
+			next(e);
+		}
+	};
+
+	addToCart = async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const { body, user } = req;
+
+			const response = await this.service.addToCart(user ? user.id : -1, body);
 
 			return res.status(HttpStatusCode.OK).send({
 				statusCode: HttpStatusCode.OK,
@@ -81,7 +98,7 @@ export class CartItemController {
 	update = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const {
-				body: { quantity, productId, price },
+				body: { quantity, productId, price, cartId },
 				params: { id },
 			} = req;
 
@@ -89,6 +106,7 @@ export class CartItemController {
 				quantity,
 				productId,
 				price,
+				cartId,
 			});
 
 			return res.status(HttpStatusCode.OK).send({

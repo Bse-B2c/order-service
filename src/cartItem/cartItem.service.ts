@@ -2,6 +2,7 @@ import { CartItemService as Service } from '@cartItem/interfaces/cartItemService
 import { CartItem } from '@cartItem/entity/cartItem.entity';
 import {
 	ArrayContains,
+	Equal,
 	FindOptionsOrderValue,
 	FindOptionsWhere,
 	In,
@@ -11,22 +12,68 @@ import {
 import { CartItemDto } from '@cartItem/dtos/cartItem.dto';
 import { HttpException, HttpStatusCode } from '@bse-b2c/common';
 import { SearchDto } from '@cartItem/dtos/search.dto';
+import { ShoppingCartService } from '@shoppingCart/interfaces/shoppingCartService.interface';
+import { AddItemDto } from '@cartItem/dtos/AddItem.dto';
 
 export class CartItemService implements Service {
-	constructor(private repository: Repository<CartItem>) {}
+	constructor(
+		private repository: Repository<CartItem>,
+		private shoppingCartService: ShoppingCartService
+	) {}
 
 	create = async ({
 		productId,
 		quantity,
 		price,
+		cartId,
 	}: CartItemDto): Promise<CartItem> => {
+		const shoppingCart = await this.shoppingCartService.findOne(cartId);
+
 		const newCart = await this.repository.create({
 			productId,
 			quantity,
 			price,
+			shoppingCart,
 		});
 
 		return this.repository.save(newCart);
+	};
+
+	addToCart = async (
+		userId: number,
+		{ productId, price, discount }: AddItemDto
+	): Promise<CartItem> => {
+		const shoppingCart = await this.shoppingCartService.findCartByUser(userId);
+		const cartItem = await this.repository.findOne({
+			relations: { shoppingCart: true },
+			loadRelationIds: true,
+			where: { productId, shoppingCart: Equal(shoppingCart.id) },
+		});
+		const productPrice = discount ? price - (price * discount) / 100 : price;
+
+		if (!cartItem) {
+			const newCartItem = await this.create({
+				productId,
+				quantity: 1,
+				price: productPrice,
+				cartId: shoppingCart.id,
+			});
+
+			await this.shoppingCartService.updateTotal(shoppingCart.id);
+			return newCartItem;
+		}
+		const newQuantity = cartItem.quantity + 1;
+
+		Object.assign(cartItem, {
+			quantity: newQuantity,
+			price: productPrice,
+		});
+
+		await this.repository.save(cartItem);
+
+		await this.shoppingCartService.updateTotal(shoppingCart.id);
+
+		return cartItem;
 	};
 
 	findOne = async (id: number): Promise<CartItem> => {
