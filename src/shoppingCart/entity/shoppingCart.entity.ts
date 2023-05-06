@@ -9,12 +9,12 @@ export class ShoppingCart {
 	@Column()
 	userId: number;
 
-	@Column({ default: 0 })
+	@Column({ default: 0, type: 'float' })
 	total: number;
 
 	@OneToMany(() => CartItem, cartItem => cartItem.shoppingCart, {
 		onDelete: 'CASCADE',
-		cascade: ['remove'],
+		cascade: ['remove', 'insert', 'update'],
 	})
 	cartItems: Array<CartItem>;
 }

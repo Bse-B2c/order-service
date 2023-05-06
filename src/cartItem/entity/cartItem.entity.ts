@@ -15,11 +15,11 @@ export class CartItem {
 	@Column()
 	productId: number;
 
-	@Column()
+	@Column({ type: 'float' })
 	price: number;
 
 	@ManyToOne(() => ShoppingCart, shoppingCart => shoppingCart.cartItems, {
-		cascade: ['insert'],
+		cascade: ['insert', 'update'],
 		onDelete: 'CASCADE',
 	})
 	shoppingCart: ShoppingCart;
