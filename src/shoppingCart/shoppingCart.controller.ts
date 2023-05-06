@@ -47,7 +47,7 @@ export class ShoppingCartController {
 		try {
 			const userId = req.user?.id ?? -1;
 
-			const response = await this.service.findMyCart(+userId);
+			const response = await this.service.findCartByUser(+userId);
 
 			return res.status(HttpStatusCode.OK).send({
 				statusCode: HttpStatusCode.OK,

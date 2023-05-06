@@ -22,8 +22,25 @@ export class ShoppingCartService implements Service {
 		return this.repository.save(newCart);
 	};
 
-	findMyCart = async (userId: number): Promise<ShoppingCart> => {
-		const cart = await this.repository.findOne({ where: { userId } });
+	updateTotal = async (id: number): Promise<ShoppingCart> => {
+		const shoppingCart = await this.findOne(id);
+		let total = 0;
+
+		for (let i = 0; i < shoppingCart.cartItems.length; i++) {
+			const currentItem = shoppingCart.cartItems[i];
+
+			total += currentItem.price * currentItem.quantity;
+		}
+
+		Object.assign(shoppingCart, { total });
+
+		return this.repository.save(shoppingCart);
+	};
+
+	findCartByUser = async (userId: number): Promise<ShoppingCart> => {
+		const cart = await this.repository.findOne({
+			where: { userId },
+		});
 
 		if (!cart)
 			throw new HttpException({
@@ -36,6 +53,7 @@ export class ShoppingCartService implements Service {
 
 	findOne = async (id: number): Promise<ShoppingCart> => {
 		const cart = await this.repository.findOne({
+			relations: { cartItems: true },
 			where: { id },
 		});
 
