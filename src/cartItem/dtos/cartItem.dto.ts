@@ -12,4 +12,8 @@ export class CartItemDto {
 	@IsNotEmpty()
 	@IsNumber()
 	price: number;
+
+	@IsNotEmpty()
+	@IsNumber()
+	cartId: number;
 }
