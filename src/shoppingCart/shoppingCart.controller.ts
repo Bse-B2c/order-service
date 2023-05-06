@@ -9,15 +9,48 @@ export class ShoppingCartController {
 
 	create = async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			const { userId, total } = req.body as ShoppingCartDto;
+			const { userId } = req.body as ShoppingCartDto;
 
 			const response = await this.service.create({
 				userId,
-				total,
 			});
 
 			return res.status(HttpStatusCode.CREATED).send({
 				statusCode: HttpStatusCode.CREATED,
+				error: null,
+				data: response,
+			});
+		} catch (e) {
+			next(e);
+		}
+	};
+
+	createMyCart = async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const userId = req.user?.id ?? -1;
+
+			const response = await this.service.create({
+				userId,
+			});
+
+			return res.status(HttpStatusCode.CREATED).send({
+				statusCode: HttpStatusCode.CREATED,
+				error: null,
+				data: response,
+			});
+		} catch (e) {
+			next(e);
+		}
+	};
+
+	findMyCart = async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const userId = req.user?.id ?? -1;
+
+			const response = await this.service.findMyCart(+userId);
+
+			return res.status(HttpStatusCode.OK).send({
+				statusCode: HttpStatusCode.OK,
 				error: null,
 				data: response,
 			});
@@ -80,13 +113,12 @@ export class ShoppingCartController {
 	update = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const {
-				body: { userId, total },
+				body: { userId },
 				params: { id },
 			} = req;
 
 			const response = await this.service.update(+id, {
 				userId,
-				total,
 			});
 
 			return res.status(HttpStatusCode.OK).send({

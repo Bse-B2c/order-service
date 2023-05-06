@@ -14,16 +14,24 @@ import { SearchDto } from '@shoppingCart/dtos/search.dto';
 export class ShoppingCartService implements Service {
 	constructor(private repository: Repository<ShoppingCart>) {}
 
-	create = async ({
-		userId,
-		total,
-	}: ShoppingCartDto): Promise<ShoppingCart> => {
+	create = async ({ userId }: ShoppingCartDto): Promise<ShoppingCart> => {
 		const newCart = await this.repository.create({
 			userId,
-			total,
 		});
 
 		return this.repository.save(newCart);
+	};
+
+	findMyCart = async (userId: number): Promise<ShoppingCart> => {
+		const cart = await this.repository.findOne({ where: { userId } });
+
+		if (!cart)
+			throw new HttpException({
+				statusCode: HttpStatusCode.NOT_FOUND,
+				message: `User don't have a Cart`,
+			});
+
+		return cart;
 	};
 
 	findOne = async (id: number): Promise<ShoppingCart> => {

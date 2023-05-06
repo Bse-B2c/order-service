@@ -9,7 +9,7 @@ export class ShoppingCart {
 	@Column()
 	userId: number;
 
-	@Column()
+	@Column({ default: 0 })
 	total: number;
 
 	@OneToMany(() => CartItem, cartItem => cartItem.shoppingCart, {

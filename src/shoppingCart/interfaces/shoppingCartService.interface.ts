@@ -5,6 +5,7 @@ import { ShoppingCart } from '@shoppingCart/entity/shoppingCart.entity';
 export interface ShoppingCartService {
 	create(shoppingCart: ShoppingCartDto): Promise<ShoppingCart>;
 	findOne(id: number): Promise<ShoppingCart>;
+	findMyCart(userId: number): Promise<ShoppingCart>;
 	delete(id: number): Promise<ShoppingCart>;
 	find(search: SearchDto): Promise<Array<ShoppingCart>>;
 	update(id: number, updatedCart: ShoppingCartDto): Promise<ShoppingCart>;
