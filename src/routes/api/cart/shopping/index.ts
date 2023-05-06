@@ -16,6 +16,8 @@ const validateBody = validate('body');
 const validateParams = validate('params');
 const validateQuery = validate('query');
 
+router.get('/me', shoppingCartController.findMyCart);
+router.post('/me', shoppingCartController.createMyCart);
 router.post('/', validateBody(ShoppingCartDto), shoppingCartController.create);
 router.get('/:id', validateParams(ParamsDto), shoppingCartController.findOne);
 router.get('/', validateQuery(SearchDto), shoppingCartController.find);
