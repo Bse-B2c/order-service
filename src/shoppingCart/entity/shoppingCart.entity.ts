@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CartItem } from '@cartItem/entity/cartItem.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class ShoppingCart {
@@ -10,4 +11,10 @@ export class ShoppingCart {
 
 	@Column()
 	total: number;
+
+	@OneToMany(() => CartItem, cartItem => cartItem.shoppingCart, {
+		onDelete: 'CASCADE',
+		cascade: ['remove'],
+	})
+	cartItems: Array<CartItem>;
 }

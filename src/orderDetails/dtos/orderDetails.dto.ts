@@ -24,4 +24,8 @@ export class OrderDetailsDto {
 
 	@IsNotEmpty()
 	paymentDetails: PaymentDetailsDto;
+
+	@IsNumber()
+	@IsNotEmpty()
+	addressId: number;
 }

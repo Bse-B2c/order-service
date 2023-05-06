@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { OrderItemDto } from '@orderItems/dtos/orderItems.dto';
 
 export class UpdateOrderDetailsDto {
 	@IsNumber()
@@ -16,4 +17,7 @@ export class UpdateOrderDetailsDto {
 	@IsString()
 	@IsNotEmpty()
 	packageTracking: string;
+
+	@IsNotEmpty()
+	orderItems: OrderItemDto;
 }

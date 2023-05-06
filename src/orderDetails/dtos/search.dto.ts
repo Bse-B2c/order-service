@@ -1,5 +1,11 @@
 import { BaseSearchFilter } from '@src/common/dtos/baseSearchFilter.dto';
-import { IsISO8601, IsIn, IsOptional, IsString } from 'class-validator';
+import {
+	IsISO8601,
+	IsIn,
+	IsNumber,
+	IsOptional,
+	IsString,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
 import { formatQueryToArray } from '@src/common/utils/query.utils';
 
@@ -41,4 +47,9 @@ export class SearchDto extends BaseSearchFilter {
 	@IsIn(['id', 'identifier', 'packageTracking', 'date', 'userId', 'total'])
 	@IsOptional()
 	orderBy?: string;
+
+	@IsOptional()
+	@Transform(({ value }) => +value)
+	@IsNumber({ allowNaN: true })
+	status: number;
 }

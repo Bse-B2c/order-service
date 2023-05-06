@@ -1,6 +1,7 @@
 import { OrderDetailsService as Service } from '@orderDetails/interfaces/orderDetailsService.interface';
 import {
 	ArrayContains,
+	Equal,
 	FindOptionsOrderValue,
 	FindOptionsWhere,
 	In,
@@ -29,6 +30,7 @@ export class OrderDetailsService implements Service {
 		orderItems,
 		paymentDetails,
 		total,
+		addressId,
 	}: OrderDetailsDto): Promise<OrderDetails> => {
 		let items: Array<OrderItemsDto> = []; //TODO:limpar carrinho on create
 		let details = undefined;
@@ -52,6 +54,7 @@ export class OrderDetailsService implements Service {
 			orderItems: items,
 			paymentDetails: details,
 			total,
+			addressId,
 		});
 		return this.repository.save(newDetails);
 	};
@@ -87,10 +90,11 @@ export class OrderDetailsService implements Service {
 			userId,
 			date,
 			total,
+			status,
 			limit = 10,
 			page = 0,
-			orderBy = 'status',
-			sortOrder = 'asc',
+			orderBy = 'total',
+			sortOrder = 'ASC',
 		} = search;
 
 		let where: FindOptionsWhere<OrderDetails> = {};
@@ -111,9 +115,10 @@ export class OrderDetailsService implements Service {
 
 		if (userId) where = { ...where, userId: ArrayContains(userId) };
 
+		if (status) where = { ...where, paymentDetails: { status: Equal(status) } };
+
 		return this.repository.find({
 			relations: { orderItems: true, paymentDetails: true },
-			loadRelationIds: true,
 			where,
 			order: {
 				[orderBy]: sortOrder as FindOptionsOrderValue,

@@ -16,6 +16,7 @@ export class OrderDetailsController {
 				total,
 				orderItems,
 				paymentDetails,
+				addressId,
 			} = req.body as OrderDetailsDto;
 
 			const response = await this.service.create({
@@ -25,6 +26,7 @@ export class OrderDetailsController {
 				paymentDetails,
 				userId,
 				total,
+				addressId,
 			});
 
 			return res.status(HttpStatusCode.CREATED).send({

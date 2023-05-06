@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class UpdatePaymentDetailsDto {
 	@IsNotEmpty()
 	@IsNumber()
-	status: Array<number>;
+	status: number;
 
 	@IsNotEmpty()
 	@IsString()
@@ -11,5 +11,5 @@ export class UpdatePaymentDetailsDto {
 
 	@IsNotEmpty()
 	@IsNumber()
-	type: Array<number>;
+	type: number;
 }

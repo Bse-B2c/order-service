@@ -19,10 +19,4 @@ export class PaymentDetails {
 
 	@Column({ default: paymentType.BOLETO })
 	type: number;
-
-	@OneToOne(() => OrderDetails, orderDetails => orderDetails.paymentDetails, {
-		cascade: ['insert'],
-		onDelete: 'CASCADE',
-	})
-	orderDetails: OrderDetails;
 }

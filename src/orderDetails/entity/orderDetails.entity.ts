@@ -31,16 +31,15 @@ export class OrderDetails {
 	})
 	orderItems: Array<OrderItems>;
 
-	@OneToOne(
-		() => PaymentDetails,
-		paymentDetails => paymentDetails.orderDetails,
-		{
-			cascade: ['insert'],
-			onDelete: 'CASCADE',
-		}
-	)
+	@OneToOne(() => PaymentDetails, paymentDetails => paymentDetails, {
+		cascade: ['insert'],
+		onDelete: 'CASCADE',
+	})
 	paymentDetails: PaymentDetails;
 
 	@Column()
 	packageTracking: string;
+
+	@Column()
+	addressId: number;
 }
