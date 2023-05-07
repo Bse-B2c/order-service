@@ -1,4 +1,4 @@
-import { IsISO8601, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class OrderItemsDto {
 	@IsNotEmpty()
@@ -12,4 +12,8 @@ export class OrderItemsDto {
 	@IsNotEmpty()
 	@IsNumber()
 	total: number;
+
+	@IsNotEmpty()
+	@IsNumber()
+	price: number;
 }

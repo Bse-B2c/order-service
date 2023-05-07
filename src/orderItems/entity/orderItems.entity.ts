@@ -21,6 +21,9 @@ export class OrderItems {
 	@Column()
 	productId: number;
 
-	@Column()
+	@Column({ type: 'float' })
+	price: number;
+
+	@Column({ type: 'float' })
 	total: number;
 }

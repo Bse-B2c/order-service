@@ -1,7 +1,6 @@
 import { OrderItemsService as Service } from '@orderItems/interfaces/orderItemsService.interface';
 import {
 	ArrayContains,
-	Equal,
 	FindOptionsOrderValue,
 	FindOptionsWhere,
 	In,
@@ -19,13 +18,13 @@ export class OrderItemsService implements Service {
 
 	create = async ({
 		quantity,
-
+		price,
 		productId,
 		total,
 	}: OrderItemsDto): Promise<OrderItems> => {
 		const newItems = await this.repository.create({
 			quantity,
-
+			price,
 			productId,
 			total,
 		});
