@@ -186,7 +186,7 @@ export class OrderDetailsService implements Service {
 				date: MoreThanOrEqual(new Date(date)),
 			};
 
-		if (userId) where = { ...where, userId: ArrayContains(userId) };
+		if (userId) where = { ...where, userId: In(userId) };
 
 		if (status) where = { ...where, paymentDetails: { status: Equal(status) } };
 

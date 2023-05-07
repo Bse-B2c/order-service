@@ -59,6 +59,35 @@ export class OrderDetailsController {
 			next(e);
 		}
 	};
+
+	findMyOrderDetails = async (
+		req: Request,
+		res: Response,
+		next: NextFunction
+	) => {
+		try {
+			const { orderBy, sortOrder, limit, page, ...search } =
+				req.query as unknown as SearchDto;
+			const userId = req.user ? req.user.id : -1;
+
+			const response = await this.service.find({
+				...search,
+				userId: [userId],
+				orderBy: orderBy ?? 'total',
+				sortOrder: sortOrder ?? 'asc',
+				limit: limit || 10,
+				page: page || 0,
+			});
+			return res.status(HttpStatusCode.OK).send({
+				statusCode: HttpStatusCode.OK,
+				error: null,
+				data: response,
+			});
+		} catch (e) {
+			next(e);
+		}
+	};
+
 	find = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { orderBy, sortOrder, limit, page, ...search } =
