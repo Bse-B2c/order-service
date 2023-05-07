@@ -58,6 +58,7 @@ export class ShoppingCartService implements Service {
 		const cart = await this.repository.findOne({
 			relations: { cartItems: true },
 			where: { userId },
+			order: { cartItems: { id: 'ASC' } },
 		});
 
 		if (!cart)

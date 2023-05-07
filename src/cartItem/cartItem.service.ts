@@ -48,6 +48,7 @@ export class CartItemService implements Service {
 			relations: { shoppingCart: true },
 			loadRelationIds: true,
 			where: { productId, shoppingCart: Equal(shoppingCart.id) },
+			order: { id: 'ASC' },
 		});
 
 		if (!cartItem) {
@@ -62,7 +63,7 @@ export class CartItemService implements Service {
 		if (newQuantity <= 0) {
 			await this.delete(cartItem.id);
 		} else {
-			Object.assign(cartItem, { quantity: newQuantity });
+			Object.assign(cartItem, { quantity: newQuantity, date: new Date() });
 
 			await this.repository.save(cartItem);
 		}
@@ -81,6 +82,7 @@ export class CartItemService implements Service {
 			relations: { shoppingCart: true },
 			loadRelationIds: true,
 			where: { productId, shoppingCart: Equal(shoppingCart.id) },
+			order: { id: 'ASC' },
 		});
 
 		if (!cartItem) {
@@ -99,6 +101,7 @@ export class CartItemService implements Service {
 		Object.assign(cartItem, {
 			quantity: newQuantity,
 			price: price,
+			date: new Date(),
 		});
 
 		await this.repository.save(cartItem);
