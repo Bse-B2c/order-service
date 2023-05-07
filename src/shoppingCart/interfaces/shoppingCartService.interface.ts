@@ -8,6 +8,8 @@ export interface ShoppingCartService {
 	findCartByUser(userId: number): Promise<ShoppingCart>;
 	updateTotal(id: number): Promise<ShoppingCart>;
 	delete(id: number): Promise<ShoppingCart>;
+	clear(userId: number): Promise<ShoppingCart>;
+	getTotalItems(userId: number): Promise<number>;
 	find(search: SearchDto): Promise<Array<ShoppingCart>>;
 	update(id: number, updatedCart: ShoppingCartDto): Promise<ShoppingCart>;
 }

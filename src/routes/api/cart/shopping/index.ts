@@ -35,6 +35,12 @@ router.post(
 );
 router.post('/', validateBody(ShoppingCartDto), shoppingCartController.create);
 router.get(
+	'/item/total',
+	ensureAuthenticated,
+	verifyRoles([Role.CONSUMER, Role.ADMIN]),
+	shoppingCartController.getTotalItems
+);
+router.get(
 	'/:id',
 	ensureAuthenticated,
 	verifyRoles([Role.CONSUMER, Role.ADMIN]),
@@ -54,6 +60,12 @@ router.delete(
 	verifyRoles([Role.CONSUMER, Role.ADMIN]),
 	validateParams(SearchDto),
 	shoppingCartController.delete
+);
+router.patch(
+	'/clear',
+	ensureAuthenticated,
+	verifyRoles([Role.CONSUMER, Role.ADMIN]),
+	shoppingCartController.clear
 );
 router.patch(
 	'/:id',

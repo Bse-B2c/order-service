@@ -90,6 +90,39 @@ export class ShoppingCartController {
 			next(e);
 		}
 	};
+
+	clear = async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const userId = req.user?.id ?? -1;
+
+			const response = await this.service.clear(userId);
+
+			return res.status(HttpStatusCode.OK).send({
+				statusCode: HttpStatusCode.OK,
+				error: null,
+				data: response,
+			});
+		} catch (e) {
+			next(e);
+		}
+	};
+
+	getTotalItems = async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			const userId = req.user?.id ?? -1;
+
+			const response = await this.service.getTotalItems(userId);
+
+			return res.status(HttpStatusCode.OK).send({
+				statusCode: HttpStatusCode.OK,
+				error: null,
+				data: response,
+			});
+		} catch (e) {
+			next(e);
+		}
+	};
+
 	find = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { sortOrder, limit, page, ...search } =

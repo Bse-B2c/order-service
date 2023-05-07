@@ -22,6 +22,23 @@ export class ShoppingCartService implements Service {
 		return this.repository.save(newCart);
 	};
 
+	getTotalItems = async (userId: number): Promise<number> => {
+		const { cartItems } = await this.findCartByUser(userId);
+
+		return cartItems.reduce((total = 0, currentItem) => {
+			total += currentItem.quantity;
+			return total;
+		}, 0);
+	};
+
+	clear = async (userId: number): Promise<ShoppingCart> => {
+		const cart = await this.findCartByUser(userId);
+
+		Object.assign(cart, { total: 0, cartItems: [] });
+
+		return this.repository.save(cart);
+	};
+
 	updateTotal = async (id: number): Promise<ShoppingCart> => {
 		const shoppingCart = await this.findOne(id);
 		let total = 0;
