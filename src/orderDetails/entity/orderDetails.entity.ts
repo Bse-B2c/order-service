@@ -2,6 +2,7 @@ import { OrderItems } from '@src/orderItems/entity/orderItems.entity';
 import {
 	Column,
 	Entity,
+	JoinColumn,
 	OneToMany,
 	OneToOne,
 	PrimaryGeneratedColumn,
@@ -13,7 +14,7 @@ export class OrderDetails {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column()
+	@Column({ type: 'float' })
 	total: number;
 
 	@Column()
@@ -35,6 +36,7 @@ export class OrderDetails {
 		cascade: ['insert'],
 		onDelete: 'CASCADE',
 	})
+	@JoinColumn()
 	paymentDetails: PaymentDetails;
 
 	@Column()
