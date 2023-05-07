@@ -33,7 +33,6 @@ export class PaymentDetailsService implements Service {
 
 	findOne = async (id: number): Promise<PaymentDetails> => {
 		const payment = await this.repository.findOne({
-			relations: { orderDetails: true },
 			where: { id },
 		});
 
@@ -80,7 +79,6 @@ export class PaymentDetailsService implements Service {
 		if (type) where = { ...where, type: ArrayContains(type) };
 
 		return this.repository.find({
-			relations: { orderDetails: true },
 			loadRelationIds: true,
 			where,
 			order: {
